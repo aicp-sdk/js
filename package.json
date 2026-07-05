@@ -1,0 +1,36 @@
+{
+  "name": "@aicp/sdk",
+  "version": "0.2.0",
+  "description": "JavaScript SDK for AI Inference Control Plane — provider-agnostic inference client",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aicp-sdk/js.git"
+  },
+  "homepage": "https://github.com/aicp-sdk/js#readme",
+  "bugs": {
+    "url": "https://github.com/aicp-sdk/js/issues"
+  },
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "eventsource-parser": "^2.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "vitest": "^1.4.0"
+  }
+}

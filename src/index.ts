@@ -39,6 +39,8 @@ export type {
   RoutingConfig,
   RoutingDecision,
   RoutingDecisionSummary,
+  RoutingPolicy,
+  RoutingStrategy,
   SignupOptions,
   TimelineEvent,
   UpdateProjectOptions,

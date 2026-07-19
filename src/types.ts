@@ -2,7 +2,7 @@
 
 export type Period = '24h' | '7d' | '30d' | '90d';
 export type UserRole = 'owner' | 'project_manager' | 'developer';
-export type Provider = 'openai' | 'anthropic' | 'gemini' | 'openrouter';
+export type Provider = 'openai' | 'anthropic' | 'gemini' | 'mistral';
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 
@@ -155,13 +155,30 @@ export interface ProviderTestResult {
 export interface RoutingWeights {
   cost: number;
   latency: number;
-  reliability: number;
-  preference: number;
+  quality: number;
+}
+
+export type RoutingStrategy = 'balanced' | 'cheapest' | 'fastest' | 'highest_quality' | 'manual';
+
+/**
+ * Org-level governance policy. Not enforced at the project level — project
+ * routing config (`ProjectRoutingConfig`) has no `policy` field on the backend.
+ */
+export interface RoutingPolicy {
+  preferredProviders?: string[];
+  blockedProviders?: string[];
+  maxCostPerRequest?: number;
+  maxLatencyMs?: number;
+  allowOpenSource?: boolean;
+  allowProprietary?: boolean;
+  allowSelfHosted?: boolean;
+  allowManaged?: boolean;
+  fallbackBehavior?: 'fail' | 'allow_commercial' | 'allow_global' | 'allow_cheapest';
 }
 
 export interface RoutingConfig {
   mode: 'auto' | 'manual';
-  strategy: 'balanced' | 'cheapest' | 'fastest' | 'reliable';
+  strategy: RoutingStrategy;
   manualProvider?: string;
   manualModel?: string;
   providerOrder: string[];
@@ -170,6 +187,7 @@ export interface RoutingConfig {
   allowedRegions: string[];
   weights: RoutingWeights;
   params: Record<string, unknown>;
+  policy: RoutingPolicy;
 }
 
 export interface RoutingAlias {
